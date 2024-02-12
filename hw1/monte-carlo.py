@@ -15,16 +15,20 @@ def approximate_pi(num_points: int) -> tuple[float, float]:
     return approx, error
 
 if __name__ == "__main__":
+    # Monte carlo approximation
     limit = 10_000
     step = 10
-    res = [approximate_pi(num_points) for num_points in range(step, limit+step, step)]
-    approx = [r[0] for r in res]
-    errors = [r[1] for r in res]
+    approxs = []
+    errors = []
+    for num_points in range(step, limit+step, step):
+        approx, error = approximate_pi(num_points)
+        approxs.append(approx)
+        errors.append(error)
     
     # Plot results
     f, (ax1, ax2) = plt.subplots(1,2,figsize=(10,4))
     f.suptitle("Monte Carlo Pi Approximation")
-    ax1.plot(approx)
+    ax1.plot(approxs)
     ax1.set(xlabel="Num points * 1e2", ylabel="~Pi", title="Approximate Value")
     ax2.plot(errors)
     ax2.set(xlabel="Num points * 1e2", ylabel="Actual vs expected", title="Error")
